@@ -6,6 +6,11 @@ async function main() {
   console.log('got manifest for ' + manifest.name + '@' + manifest.version);
   console.timeEnd('request - manifest');
 
+  console.time('request - extract');
+  const { from, resolved, integrity } = await pacote.extract('@colors/colors@1.6.0', 'node_modules', { registry: 'https://nexus.common-build.gcp.oreilly.com/repository/npm-group/' });
+  console.log('extracted!', from, resolved, integrity)
+  console.timeEnd('request - extract');
+
   console.time('request - tarball');
   const data = await pacote.tarball('https://nexus.common-build.gcp.oreilly.com/repository/npm-group/@colors/colors/-/colors-1.6.0.tgz');
   console.log('got ' + data.length + ' bytes of tarball data');
